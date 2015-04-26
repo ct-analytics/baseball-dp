@@ -1,4 +1,3 @@
-
 bases <- list(empty=1,
               first.only=2,
               second.only=3,
@@ -45,22 +44,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
   for (leadoff in seq(1,9)) {
     num.outs <- outs[3]
-    a[1] <- W[d,leadoff,ondeck]  ##strike out or short fly out
-    a[2] <- a[1]                                                    ##long fly out
-    a[3] <- a[1]                                                    ##hard ground out
-    a[4] <- a[1]                                                    ##soft ground out
-    a[5] <- V[ondeck,min(dtop,d+1),num.outs,bases$full,batter,leadoff]       ##walk
-    a[6] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.second,batter,leadoff]       ##short single
-    a[7] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.third,batter,leadoff]       ##long single
-    a[8] <- V[ondeck,min(dtop,d+2),num.outs,bases$second.third,nobody,leadoff]       ##short double
-    a[9] <- V[ondeck,min(dtop,d+3),num.outs,bases$second.only,nobody,leadoff]       ##long double
-    a[10] <- V[ondeck,min(dtop,d+3),num.outs,bases$third.only,nobody,leadoff]       ##triple
-    a[11] <- V[ondeck,min(dtop,d+4),num.outs,bases$empty,nobody,leadoff]       ##home run
+    a[1] <- W[d,leadoff,ondeck]
+    a[2] <- a[1]
+    a[3] <- a[1]
+    a[4] <- a[1]
+    a[5] <- V[ondeck,min(dtop,d+1),num.outs,bases$full,batter,leadoff]
+    a[6] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.second,batter,leadoff]
+    a[7] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.third,batter,leadoff]
+    a[8] <- V[ondeck,min(dtop,d+2),num.outs,bases$second.third,nobody,leadoff]
+    a[9] <- V[ondeck,min(dtop,d+3),num.outs,bases$second.only,nobody,leadoff]
+    a[10] <- V[ondeck,min(dtop,d+3),num.outs,bases$third.only,nobody,leadoff]
+    a[11] <- V[ondeck,min(dtop,d+4),num.outs,bases$empty,nobody,leadoff]
     walk <- a[5]
     hitaway <- probs[batter,] %*% a
-    V[batter,d,num.outs,bases$full,onfirst,leadoff] = min(hitaway,walk)
+    V[batter,d,num.outs,bases$full,onfirst,leadoff] <- min(hitaway,walk)
     if (V[batter,d,num.outs,bases$full,onfirst,leadoff] == walk)
-      strategy[batter,d,num.outs,bases$full,onfirst,leadoff] = 4
+      strategy[batter,d,num.outs,bases$full,onfirst,leadoff] <- 4
 }}}
 
 ## 2 outs, men on 2nd and 3rd
@@ -73,22 +72,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[3]
-      a[1] <- W[d,leadoff,ondeck]                                     ##strike out or short fly out
-      a[2] <- a[1]                                                    ##long fly out
-      a[3] <- a[1]                                                    ##hard ground out
-      a[4] <- a[1]                                                    ##soft ground out
-      a[5] <- V[ondeck,d,num.outs,bases$full,batter,leadoff]       ##walk
-      a[6] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.only,batter,leadoff]       ##short single
-      a[7] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.only,batter,leadoff]       ##long single
-      a[8] <- V[ondeck,min(dtop,d+2),num.outs,bases$second.only,nobody,leadoff]       ##short double
-      a[9] <- V[ondeck,min(dtop,d+2),num.outs,bases$second.only,nobody,leadoff]       ##long double
-      a[10] <- V[ondeck,min(dtop,d+2),num.outs,bases$third.only,nobody,leadoff]       ##triple
-      a[11] <- V[ondeck,min(dtop,d+3),num.outs,bases$empy,nobody,leadoff]       ##home run
+      a[1] <- W[d,leadoff,ondeck]
+      a[2] <- a[1]
+      a[3] <- a[1]
+      a[4] <- a[1]
+      a[5] <- V[ondeck,d,num.outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+2),num.outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+2),num.outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),num.outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),num.outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),num.outs,bases$empy,nobody,leadoff]
       walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,num.outs,bases$second.third,onfirst,leadoff] = min(hitaway,walk)
+      V[batter,d,num.outs,bases$second.third,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,num.outs,bases$second.third,onfirst,leadoff] == walk)
-        strategy[batter,d,num.outs,bases$second.third,onfirst,leadoff] = 4
+        strategy[batter,d,num.outs,bases$second.third,onfirst,leadoff] <- 4
 }}}
 
 ## 2 outs, men on 1st and 3rd
@@ -116,11 +115,11 @@ for (batter in seq(1,9)) {
       hitaway <- probs[batter,] %*% a
       steal <- psteal[onfirst] * V[batter,d,num.outs,bases$second.third,nobody,leadoff] +
         (1-psteal[onfirst]) * W[d,leadoff,batter]
-      V[batter,d,num.outs,bases$first.third,onfirst,leadoff] = min(max(hitaway,steal),walk)
+      V[batter,d,num.outs,bases$first.third,onfirst,leadoff] <- min(max(hitaway,steal),walk)
       if (V[batter,d,num.outs,bases$first.third,onfirst,leadoff] == walk)
-        strategy[batter,d,num.outs,bases$first.third,onfirst,leadoff] = 4
+        strategy[batter,d,num.outs,bases$first.third,onfirst,leadoff] <- 4
       else if (V[batter,d,num.outs,bases$first.third,onfirst,leadoff] == steal)
-        strategy[batter,d,num.outs,bases$first.third,onfirst,leadoff] = 2
+        strategy[batter,d,num.outs,bases$first.third,onfirst,leadoff] <- 2
 }}}
 
 ## 2 outs, men on 1st and 2nd
@@ -146,9 +145,9 @@ for (batter in seq(1,9)) {
       a[11] <- V[ondeck,min(dtop,d+3),num.outs,bases$empty,nobody,leadoff]
       walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,num.outs,bases$first.second,onfirst,leadoff] = min(max(hitaway,steal),walk)
+      V[batter,d,num.outs,bases$first.second,onfirst,leadoff] <- min(max(hitaway,steal),walk)
       if (V[batter,d,num.outs,bases$first.second,onfirst,leadoff] == walk)
-        strategy[batter,d,num.outs,bases$first.third,onfirst,leadoff] = 4
+        strategy[batter,d,num.outs,bases$first.third,onfirst,leadoff] <- 4
 }}}
 
 ## 2 outs, man on 3rd
@@ -174,9 +173,9 @@ for (batter in seq(1,9)) {
       a[11] <- V[ondeck,min(dtop,d+2),num.outs,bases$empty,nobody,leadoff]
       walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,num.outs,bases$third.only,onfirst,leadoff] = min(max(hitaway,steal),walk)
+      V[batter,d,num.outs,bases$third.only,onfirst,leadoff] <- min(max(hitaway,steal),walk)
       if (V[batter,d,num.outs,bases$third.only,onfirst,leadoff] == walk)
-        strategy[batter,d,num.outs,bases$third.only,onfirst,leadoff] = 4
+        strategy[batter,d,num.outs,bases$third.only,onfirst,leadoff] <- 4
 }}}
 
 ## 2 outs, man on 2nd
@@ -189,22 +188,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[3]
-      a[1]=W[d,leadoff,ondeck]
-      a[2]=a[1]
-      a[3]=a[1]
-      a[4]=a[1]
-      a[5 ]=V[ondeck,d,outs,bases$first.second,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- W[d,leadoff,ondeck]
+      a[2] <- a[1]
+      a[3] <- a[1]
+      a[4] <- a[1]
+      a[5] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$second.only,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$second.only,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$second.only,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$second.only,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$second.only,onfirst,leadoff] <- 4
 }}}
 
 ## 2 outs, man on 1st
@@ -217,26 +216,26 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[3]
-      a[1]=W[d,leadoff,ondeck]
-      a[2]=a[1]
-      a[3]=a[1]
-      a[4]=a[1]
-      a[5 ]=V[ondeck,d,outs,bases$first.second,batter,leadoff]
-      a[6 ]=V[ondeck,d,outs,bases$first.second,batter,leadoff]
-      a[7 ]=V[ondeck,d,outs,bases$first.third,batter,leadoff]
-      a[8 ]=V[ondeck,d,outs,bases$second.third,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- W[d,leadoff,ondeck]
+      a[2] <- a[1]
+      a[3] <- a[1]
+      a[4] <- a[1]
+      a[5] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[6] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,d,outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,d,outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      steal=psteal(onfirst)*V[batter,d,outs,bases$second.only,nobody,leadoff) +
+      steal <- psteal(onfirst)*V[batter,d,outs,bases$second.only,nobody,leadoff) +
         (1-psteal(onfirst))*W[d,leadoff,batter)
-      V[batter,d,outs,bases$first.only,onfirst,leadoff]=min(max(hitaway,steal),walk)
+      V[batter,d,outs,bases$first.only,onfirst,leadoff] <- min(max(hitaway,steal),walk)
       if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==walk) {
-        strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 4
       } else if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==steal) { 
-        strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=2 
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 2 
       }
 }}}
 
@@ -250,22 +249,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[3]
-      a[1]=W[d,leadoff,ondeck]
-      a[2]=a[1]
-      a[3]=a[1]
-      a[4]=a[1]
-      a[5 ]=V[ondeck,d,outs,bases$first.only,batter,leadoff]
-      a[6 ]=V[ondeck,d,outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,d,outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,d,outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,d,outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,d,outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+1),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- W[d,leadoff,ondeck]
+      a[2] <- a[1]
+      a[3] <- a[1]
+      a[4] <- a[1]
+      a[5] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[6] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,d,outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,d,outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,d,outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+1),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$empty,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$empty,onfirst,leadoff] <- min(hitaway,walk)
       if V[batter,d,outs,bases$empty,onfirst,leadoff]==walk
-        strategy(batter,d,outs,bases$empty,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$empty,onfirst,leadoff] <- 4
 }}}
 
 ## 1 out, bases loaded
@@ -278,22 +277,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$full,onfirst,leadoff]
-      a[2 ]=V[ondeck,min(dtop,d+1),outs2,bases$first.second ,onfirst,leadoff]
-      a[3 ]=W[d,leadoff,ondeck]
-      a[4 ]=V[ondeck,d,outs2,bases$full,batter,leadoff]
-      a[5 ]=V[ondeck,min(dtop,d+1),outs,bases$full,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+2),outs,bases$first.second,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+2),outs,bases$first.third,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+2),outs,bases$second.third,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+3),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+3),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+4),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs2,bases$full,onfirst,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs2,bases$first.second,onfirst,leadoff]
+      a[3] <- W[d,leadoff,ondeck]
+      a[4] <- V[ondeck,d,outs2,bases$full,batter,leadoff]
+      a[5] <- V[ondeck,min(dtop,d+1),outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+2),outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+2),outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+2),outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+3),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+3),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+4),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$full,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$full,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$full,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$full,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$full,onfirst,leadoff] <- 4
 }}}
 
 ## 1 out, men on 2nd and 3rd
@@ -306,22 +305,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$second.third,nobody,leadoff]
-      a[2 ]=V[ondeck,min(dtop,d+1),outs2,bases$third.only,nobody,leadoff]
-      a[3 ]=a[1]
-      a[4 ]=V[ondeck,min(dtop,d+1),outs2,bases$third.only ,nobody,leadoff]
-      a[5 ]=V[ondeck,d,outs,bases$full,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs2,bases$second.third,nobody,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs2,bases$third.only,nobody,leadoff]
+      a[3] <- a[1]
+      a[4] <- V[ondeck,min(dtop,d+1),outs2,bases$third.only,nobody,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$second.third,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$second.third,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$second.third,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$second.third,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$second.third,onfirst,leadoff] <- 4
 }}}
 
 ## 1 out, men on 1st and 3rd
@@ -334,26 +333,26 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$first.third,onfirst,leadoff]
-      a[2 ]=V[ondeck,min(dtop,d+1),outs2,bases$first.only,onfirst,leadoff]
-      a[3 ]=W[d,leadoff,ondeck]
-      a[4 ]=V[ondeck,min(dtop,d+1),outs2,bases$second.only,nobody,leadoff]
-      a[5 ]=V[ondeck,d,outs,bases$full,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.second,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.third,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.third,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs2,bases$first.third,onfirst,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs2,bases$first.only,onfirst,leadoff]
+      a[3] <- W[d,leadoff,ondeck]
+      a[4] <- V[ondeck,min(dtop,d+1),outs2,bases$second.only,nobody,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      steal=psteal(onfirst)*V[batter,d,outs,bases$second.third,nobody,leadoff) +
+      steal <- psteal(onfirst)*V[batter,d,outs,bases$second.third,nobody,leadoff) +
         (1-psteal(onfirst))*V[batter,d,outs2,bases$third.only,nobody,leadoff)
-      V[batter,d,outs,bases$first.third,onfirst,leadoff]=min(max(hitaway,steal),walk)
+      V[batter,d,outs,bases$first.third,onfirst,leadoff] <- min(max(hitaway,steal),walk)
       if (V[batter,d,outs,bases$first.third,onfirst,leadoff]==walk) {
-      strategy(batter,d,outs,bases$first.third,onfirst,leadoff]=4
+      strategy[batter,d,outs,bases$first.third,onfirst,leadoff] <- 4
       } else if (V[batter,d,outs,bases$first.third,onfirst,leadoff]==steal) {
-      strategy(batter,d,outs,bases$first.third,onfirst,leadoff]=2 
+      strategy[batter,d,outs,bases$first.third,onfirst,leadoff] <- 2 
       }
 }}}
 
@@ -367,26 +366,26 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$first.second,onfirst,leadoff]
-      a[2 ]=V[ondeck,d,outs2,bases$first.third,onfirst,leadoff]
-      a[3 ]=W[d,leadoff,ondeck]
-      a[4 ]=V[ondeck,d,outs2,bases$first.second,batter,leadoff]
-      a[5 ]=V[ondeck,d,outs,bases$full,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.second,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.third,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.third,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
-      bunt=sacbunt(batter)*V[ondeck,d,outs2,bases$second.third,nobody,leadoff) +
+      a[1] <- V[ondeck,d,outs2,bases$first.second,onfirst,leadoff]
+      a[2] <- V[ondeck,d,outs2,bases$first.third,onfirst,leadoff]
+      a[3] <- W[d,leadoff,ondeck]
+      a[4] <- V[ondeck,d,outs2,bases$first.second,batter,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      bunt <- sacbunt(batter)*V[ondeck,d,outs2,bases$second.third,nobody,leadoff) +
         (1-sacbunt(batter))*V[ondeck,d,outs2,bases$first.second,batter,leadoff)
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$first.second,onfirst,leadoff]=min(max(bunt,hitaway),walk)
+      V[batter,d,outs,bases$first.second,onfirst,leadoff] <- min(max(bunt,hitaway),walk)
       if (V[batter,d,outs,bases$first.second,onfirst,leadoff]==walk) {
-        strategy(batter,d,outs,bases$first.second,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$first.second,onfirst,leadoff] <- 4
       } else if (V[batter,d,outs,bases$first.second,onfirst,leadoff]==bunt) { 
-        strategy(batter,d,outs,bases$first.second,onfirst,leadoff]=3 
+        strategy[batter,d,outs,bases$first.second,onfirst,leadoff] <- 3 
       }
 }}}
 
@@ -400,22 +399,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$third.only,nobody,leadoff]
-      a[2 ]=V[ondeck,min(dtop,d+1),outs2,bases$empty,nobody,leadoff]
-      a[3 ]=a[1]
-      a[4 ]=a[2]
-      a[5 ]=V[ondeck,d,outs,bases$first.third ,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs2,bases$third.only,nobody,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs2,bases$empty,nobody,leadoff]
+      a[3] <- a[1]
+      a[4] <- a[2]
+      a[5] <- V[ondeck,d,outs,bases$first.third,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$third.only,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$third.only,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$third.only,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$third.only,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$third.only,onfirst,leadoff] <- 4
 }}}
 
 ## 1 out, man on 2nd
@@ -428,22 +427,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$second.only,nobody,leadoff]
-      a[2 ]=V[ondeck,d,outs2,bases$third.only,nobody,leadoff]
-      a[3 ]=a[1]
-      a[4 ]=a[2]
-      a[5 ]=V[ondeck,d,outs,bases$first.second,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs2,bases$second.only,nobody,leadoff]
+      a[2] <- V[ondeck,d,outs2,bases$third.only,nobody,leadoff]
+      a[3] <- a[1]
+      a[4] <- a[2]
+      a[5] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$second.only,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$second.only,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$second.only,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$second.only,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$second.only,onfirst,leadoff] <- 4
 }}}
 
 ## 1 out, man on 1st
@@ -456,30 +455,30 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$first.only,onfirst,leadoff]
-      a[2 ]=a[1]
-      a[3 ]=W[d,leadoff,ondeck]
-      a[4 ]=V[ondeck,d,outs2,bases$first.only,batter,leadoff]
-      a[5 ]=V[ondeck,d,outs,bases$first.second,batter,leadoff]
-      a[6 ]=V[ondeck,d,outs,bases$first.second,batter,leadoff]
-      a[7 ]=V[ondeck,d,outs,bases$first.third,batter,leadoff]
-      a[8 ]=V[ondeck,d,outs,bases$second.third,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
-      bunt=sacbunt(batter)*V[ondeck,d,outs2,bases$second.only,nobody,leadoff) +
+      a[1] <- V[ondeck,d,outs2,bases$first.only,onfirst,leadoff]
+      a[2] <- a[1]
+      a[3] <- W[d,leadoff,ondeck]
+      a[4] <- V[ondeck,d,outs2,bases$first.only,batter,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[6] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,d,outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,d,outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      bunt <- sacbunt(batter)*V[ondeck,d,outs2,bases$second.only,nobody,leadoff) +
         (1-sacbunt(batter))*V[ondeck,d,outs2,bases$first.only,batter,leadoff)
       hitaway <- probs[batter,] %*% a
-      steal=psteal(onfirst)*V[batter,d,outs,bases$second.only,nobody,leadoff) +
+      steal <- psteal(onfirst)*V[batter,d,outs,bases$second.only,nobody,leadoff) +
         (1-psteal(onfirst))*V[batter,d,outs2,bases$empty,nobody,leadoff)
-      V[batter,d,outs,bases$first.only,onfirst,leadoff]=min(max([hitaway,steal,bunt]),walk)
+      V[batter,d,outs,bases$first.only,onfirst,leadoff] <- min(max([hitaway,steal,bunt]),walk)
       if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==walk) {
-        strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 4
       } else if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==steal) {
-        strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=2 
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 2 
       } else if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==bunt) {
-        strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=3   
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 3   
       }
 }}}
 
@@ -493,22 +492,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[2]
-      a[1 ]=V[ondeck,d,outs2,bases$empty,nobody,leadoff]
-      a[2 ]=a[1]
-      a[3 ]=a[1]
-      a[4 ]=a[1]
-      a[5 ]=V[ondeck,d,outs,bases$first.only,batter,leadoff]
-      a[6 ]=V[ondeck,d,outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,d,outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,d,outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,d,outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,d,outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+1),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs2,bases$empty,nobody,leadoff]
+      a[2] <- a[1]
+      a[3] <- a[1]
+      a[4] <- a[1]
+      a[5] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[6] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,d,outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,d,outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,d,outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+1),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$empty,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$empty,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$empty,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$empty,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$empty,onfirst,leadoff] <- 4
 }}}
 
 ## 0 out, bases loaded
@@ -521,23 +520,23 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d,outs1,bases$full,onfirst,leadoff]
-      a[2 ]=V[ondeck,min(dtop,d+1),outs1,bases$first.second,onfirst,leadoff]
-      a[3 ]=min(V[ondeck,min(dtop,d+1),outs2,bases$third.only,nobody,leadoff],
-                V[ondeck,d,outs1,bases$full,batter ,leadoff])
-      a[4 ]=V[ondeck,d,outs1,bases$full,batter,leadoff]
-      a[5 ]=V[ondeck,min(dtop,d+1),outs,bases$full,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+2),outs,bases$first.second,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+2),outs,bases$first.third,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+2),outs,bases$second.third,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+3),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+3),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+4),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs1,bases$full,onfirst,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs1,bases$first.second,onfirst,leadoff]
+      a[3] <- min(V[ondeck,min(dtop,d+1),outs2,bases$third.only,nobody,leadoff],
+                V[ondeck,d,outs1,bases$full,batter,leadoff])
+      a[4] <- V[ondeck,d,outs1,bases$full,batter,leadoff]
+      a[5] <- V[ondeck,min(dtop,d+1),outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+2),outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+2),outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+2),outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+3),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+3),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+4),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$full,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$full,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$full,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$full,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$full,onfirst,leadoff] <- 4
 }}}
 
 ## 0 out, men on 2nd and 3rd
@@ -550,22 +549,22 @@ for (batter in seq(1,9)) {
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d,outs1,bases$second.third,nobody,leadoff]
-      a[2 ]=V[ondeck,min(dtop,d+1),outs1,bases$third.only,nobody,leadoff]
-      a[3 ]=a[1]
-      a[4 ]=V[ondeck,min(dtop,d+1),outs1,bases$third.only,nobody,leadoff]
-      a[5 ]=V[ondeck,d,outs,bases$full,batter,leadoff]
-      a[6 ]=V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
-      a[7 ]=V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
-      a[8 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
-      a[9 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
-      a[10]=V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
-      a[11]=V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
-      walk=a[5]
+      a[1] <- V[ondeck,d,outs1,bases$second.third,nobody,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs1,bases$third.only,nobody,leadoff]
+      a[3] <- a[1]
+      a[4] <- V[ondeck,min(dtop,d+1),outs1,bases$third.only,nobody,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+2),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
       hitaway <- probs[batter,] %*% a
-      V[batter,d,outs,bases$second.third,onfirst,leadoff]=min(hitaway,walk)
+      V[batter,d,outs,bases$second.third,onfirst,leadoff] <- min(hitaway,walk)
       if (V[batter,d,outs,bases$second.third,onfirst,leadoff]==walk)
-        strategy(batter,d,outs,bases$second.third,onfirst,leadoff]=4
+        strategy[batter,d,outs,bases$second.third,onfirst,leadoff] <- 4
 }}}
 
 ## 0 out, men on 1st and 3rd
@@ -577,36 +576,32 @@ for (batter in seq(1,9)) {
   }
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
-
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d            ,outs1,bases$first.third,onfirst,leadoff)      ##strike out or short fly out
-a[2 ]=V[ondeck,min(dtop,d+1),outs1,bases$first.only ,onfirst,leadoff)      ##long fly out
-a[3 ]=min(V[ondeck,min(dtop,d+1),outs2,bases$empty ,nobody,leadoff), ...
-          V[ondeck,d,outs1,bases$first.third ,batter,leadoff))      ##hard ground out
-a[4 ]=V[ondeck,min(dtop,d+1),outs1,bases$second.only ,nobody,leadoff)       ##soft ground out
-a[5 ]=V[ondeck,d            ,outs,bases$full,batter,leadoff)       ##walk
-a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.second ,batter,leadoff)       ##short single
-a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.third ,batter,leadoff)       ##long single
-a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.third ,nobody,leadoff)       ##short double
-a[9 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only  ,nobody,leadoff)       ##long double
-a[10]=V[ondeck,min(dtop,d+2),outs,bases$third.only  ,nobody,leadoff)       ##triple
-a[11]=V[ondeck,min(dtop,d+3),outs,bases$empty  ,nobody,leadoff)       ##home run
-walk=a[5)
-hitaway <- probs[batter,] %*% a
-steal=psteal(onfirst)*V[batter,d,outs,bases$second.third,nobody,leadoff) ...
-+(1-psteal(onfirst))*V[batter,d,outs1,bases$third.only,nobody,leadoff)
-V[batter,d,outs,bases$first.third,onfirst,leadoff]=min(max(hitaway,steal),walk)
-if V[batter,d,outs,bases$first.third,onfirst,leadoff]==walk
-strategy(batter,d,outs,bases$first.third,onfirst,leadoff]=4
-elseif V[batter,d,outs,bases$first.third,onfirst,leadoff]==steal 
-strategy(batter,d,outs,bases$first.third,onfirst,leadoff]=2 
-end
+      a[1] <- V[ondeck,d,outs1,bases$first.third,onfirst,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs1,bases$first.only,onfirst,leadoff]
+      a[3] <- min(V[ondeck,min(dtop,d+1),outs2,bases$empty,nobody,leadoff], 
+                V[ondeck,d,outs1,bases$first.third,batter,leadoff])
+      a[4] <- V[ondeck,min(dtop,d+1),outs1,bases$second.only,nobody,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      hitaway <- probs[batter,] %*% a
+      steal <- psteal(onfirst)*V[batter,d,outs,bases$second.third,nobody,leadoff) +
+        (1-psteal(onfirst))*V[batter,d,outs1,bases$third.only,nobody,leadoff)
+      V[batter,d,outs,bases$first.third,onfirst,leadoff] <- min(max(hitaway,steal),walk)
+      if (V[batter,d,outs,bases$first.third,onfirst,leadoff]==walk) {
+        strategy[batter,d,outs,bases$first.third,onfirst,leadoff] <- 4
+      } else if (V[batter,d,outs,bases$first.third,onfirst,leadoff]==steal) {
+        strategy[batter,d,outs,bases$first.third,onfirst,leadoff] <- 2 
+      }
+}}}
 
-end
-end
-end
-
-##                                       0 out, men on 1st and 2nd
+## 0 out, men on 1st and 2nd
 for (batter in seq(1,9)) {
   if (batter == 9) {
     ondeck <- 1
@@ -615,35 +610,30 @@ for (batter in seq(1,9)) {
   }
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
-
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d            ,outs1,bases$first.second,onfirst,leadoff)      ##strike out or short fly out
-a[2 ]=V[ondeck,d            ,outs1,bases$first.third,onfirst,leadoff)      ##long fly out
-a[3 ]=V[ondeck,d            ,outs2,bases$third.only, nobody,leadoff)       ##hard ground out
-a[4 ]=V[ondeck,d            ,outs1,bases$first.second,batter,leadoff)       ##soft ground out
-a[5 ]=V[ondeck,d            ,outs,bases$full,batter,leadoff)       ##walk
-a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.second ,batter,leadoff)       ##short single
-a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.third ,batter,leadoff)       ##long single
-a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.third ,nobody,leadoff)       ##short double
-a[9 ]=V[ondeck,min(dtop,d+2),outs,bases$second.only  ,nobody,leadoff)       ##long double
-a[10]=V[ondeck,min(dtop,d+2),outs,bases$third.only  ,nobody,leadoff)       ##triple
-a[11]=V[ondeck,min(dtop,d+3),outs,bases$empty  ,nobody,leadoff)       ##home run
-walk=a[5)
-bunt=sacbunt(batter)*V[ondeck,d,outs1,bases$second.third,nobody,leadoff) ...
-+(1-sacbunt(batter))*V[ondeck,d,outs1,bases$first.second,batter,leadoff)
-hitaway <- probs[batter,] %*% a
-V[batter,d,outs,bases$first.second,onfirst,leadoff]=min(max(hitaway,bunt),walk)
-if V[batter,d,outs,bases$first.second,onfirst,leadoff]==walk
-strategy(batter,d,outs,bases$first.second,onfirst,leadoff]=4
-elseif V[batter,d,outs,bases$first.second,onfirst,leadoff]==bunt 
-strategy(batter,d,outs,bases$first.second,onfirst,leadoff]=3 
-end
+      a[1] <- V[ondeck,d,outs1,bases$first.second,onfirst,leadoff]
+      a[2] <- V[ondeck,d,outs1,bases$first.third,onfirst,leadoff]
+      a[3] <- V[ondeck,d,outs2,bases$third.only, nobody,leadoff]
+      a[4] <- V[ondeck,d,outs1,bases$first.second,batter,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$full,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+2),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+2),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+3),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      bunt <- sacbunt(batter)*V[ondeck,d,outs1,bases$second.third,nobody,leadoff) +
+        (1-sacbunt(batter))*V[ondeck,d,outs1,bases$first.second,batter,leadoff)
+      hitaway <- probs[batter,] %*% a
+      V[batter,d,outs,bases$first.second,onfirst,leadoff] <- min(max(hitaway,bunt),walk)
+      if V[batter,d,outs,bases$first.second,onfirst,leadoff]==walk
+      strategy[batter,d,outs,bases$first.second,onfirst,leadoff] <- 4
+      elseif V[batter,d,outs,bases$first.second,onfirst,leadoff]==bunt 
+      strategy[batter,d,outs,bases$first.second,onfirst,leadoff] <- 3 
+}}}
 
-end
-end
-end
-
-##                                       0 out, man on 3rd
+## 0 out, man on 3rd
 for (batter in seq(1,9)) {
   if (batter == 9) {
     ondeck <- 1
@@ -652,31 +642,26 @@ for (batter in seq(1,9)) {
   }
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
-
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d            ,outs1,bases$third.only ,nobody ,leadoff)      ##strike out or short fly out
-a[2 ]=V[ondeck,min(dtop,d+1),outs1,bases$empty ,nobody ,leadoff)      ##long fly out
-a[3 ]=a[1)                                                   ##hard ground out
-a[4 ]=a[2)                                                   ##soft ground out
-a[5 ]=V[ondeck,d            ,outs,bases$first.third ,batter,leadoff)       ##walk
-a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only  ,batter,leadoff)       ##short single
-a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only  ,batter,leadoff)       ##long single
-a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only  ,nobody,leadoff)       ##short double
-a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only  ,nobody,leadoff)       ##long double
-a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only  ,nobody,leadoff)       ##triple
-a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty  ,nobody,leadoff)       ##home run
-walk=a[5)
-hitaway <- probs[batter,] %*% a
-V[batter,d,outs,bases$third.only,onfirst,leadoff]=min(hitaway,walk)
-if V[batter,d,outs,bases$third.only,onfirst,leadoff]==walk
-strategy(batter,d,outs,bases$third.only,onfirst,leadoff]=4
-end
+      a[1] <- V[ondeck,d,outs1,bases$third.only,nobody,leadoff]
+      a[2] <- V[ondeck,min(dtop,d+1),outs1,bases$empty,nobody,leadoff]
+      a[3] <- a[1]
+      a[4] <- a[2]
+      a[5] <- V[ondeck,d,outs,bases$first.third,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      hitaway <- probs[batter,] %*% a
+      V[batter,d,outs,bases$third.only,onfirst,leadoff] <- min(hitaway,walk)
+      if (V[batter,d,outs,bases$third.only,onfirst,leadoff]==walk)
+        strategy[batter,d,outs,bases$third.only,onfirst,leadoff] <- 4
+}}}
 
-end
-end
-end
-
-##                                       0 out, man on 2nd
+## 0 out, man on 2nd
 for (batter in seq(1,9)) {
   if (batter == 9) {
     ondeck <- 1
@@ -685,31 +670,26 @@ for (batter in seq(1,9)) {
   }
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
-
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d            ,outs1,bases$second.only ,nobody ,leadoff)      ##strike out or short fly out
-a[2 ]=V[ondeck,d            ,outs1,bases$third.only ,nobody ,leadoff)      ##long fly out
-a[3 ]=a[1)                                                   ##hard ground out
-a[4 ]=a[2)                                                   ##soft ground out
-a[5 ]=V[ondeck,d            ,outs,bases$first.second ,batter,leadoff)       ##walk
-a[6 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only  ,batter,leadoff)       ##short single
-a[7 ]=V[ondeck,min(dtop,d+1),outs,bases$first.only  ,batter,leadoff)       ##long single
-a[8 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only  ,nobody,leadoff)       ##short double
-a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only  ,nobody,leadoff)       ##long double
-a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only  ,nobody,leadoff)       ##triple
-a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty  ,nobody,leadoff)       ##home run
-walk=a[5)
-hitaway <- probs[batter,] %*% a
-V[batter,d,outs,bases$second.only,onfirst,leadoff]=min(hitaway,walk)
-if V[batter,d,outs,bases$second.only,onfirst,leadoff]==walk
-strategy(batter,d,outs,bases$second.only,onfirst,leadoff]=4
-end
+      a[1] <- V[ondeck,d,outs1,bases$second.only,nobody,leadoff]
+      a[2] <- V[ondeck,d,outs1,bases$third.only,nobody,leadoff]
+      a[3] <- a[1]
+      a[4] <- a[2]
+      a[5] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[6] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,min(dtop,d+1),outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      hitaway <- probs[batter,] %*% a
+      V[batter,d,outs,bases$second.only,onfirst,leadoff] <- min(hitaway,walk)
+      if (V[batter,d,outs,bases$second.only,onfirst,leadoff]==walk)
+        strategy[batter,d,outs,bases$second.only,onfirst,leadoff] <- 4
+}}}
 
-end
-end
-end
-
-##                                       0 out, man on 1st
+## 0 out, man on 1st
 for (batter in seq(1,9)) {
   if (batter == 9) {
     ondeck <- 1
@@ -718,39 +698,35 @@ for (batter in seq(1,9)) {
   }
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
-
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d            ,outs1,bases$first.only ,onfirst,leadoff)      ##strike out or short fly out
-a[2 ]=a[1)                                                   ##long fly out
-a[3 ]=V[ondeck,d            ,outs2,bases$empty ,nobody ,leadoff)      ##hard ground out
-a[4 ]=V[ondeck,d            ,outs1,bases$first.only ,batter,leadoff)       ##soft ground out
-a[5 ]=V[ondeck,d            ,outs,bases$first.second ,batter,leadoff)       ##walk
-a[6 ]=V[ondeck,d            ,outs,bases$first.second ,batter,leadoff)       ##short single
-a[7 ]=V[ondeck,d            ,outs,bases$first.third ,batter,leadoff)       ##long single
-a[8 ]=V[ondeck,d            ,outs,bases$second.third ,nobody,leadoff)       ##short double
-a[9 ]=V[ondeck,min(dtop,d+1),outs,bases$second.only  ,nobody,leadoff)       ##long double
-a[10]=V[ondeck,min(dtop,d+1),outs,bases$third.only  ,nobody,leadoff)       ##triple
-a[11]=V[ondeck,min(dtop,d+2),outs,bases$empty  ,nobody,leadoff)       ##home run
-walk=a[5)
-bunt=sacbunt(batter)*V[ondeck,d,outs1,bases$second.only,nobody,leadoff) ...
-+(1-sacbunt(batter))*V[ondeck,d,outs1,bases$first.only,batter,leadoff)
-hitaway <- probs[batter,] %*% a
-steal=psteal(onfirst)*V[batter,d,outs,bases$second.only,nobody,leadoff) ...
-+(1-psteal(onfirst))*V[batter,d,outs1,bases$empty,nobody,leadoff)
-V[batter,d,outs,bases$first.only,onfirst,leadoff]=min(max([hitaway,steal,bunt]),walk)
-if V[batter,d,outs,bases$first.only,onfirst,leadoff]==walk
-strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=4
-elseif V[batter,d,outs,bases$first.only,onfirst,leadoff]==steal 
-strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=2 
-elseif V[batter,d,outs,bases$first.only,onfirst,leadoff]==bunt 
-strategy(batter,d,outs,bases$first.only,onfirst,leadoff]=3   
-end
+      a[1] <- V[ondeck,d,outs1,bases$first.only,onfirst,leadoff]
+      a[2] <- a[1]
+      a[3] <- V[ondeck,d,outs2,bases$empty,nobody,leadoff]
+      a[4] <- V[ondeck,d,outs1,bases$first.only,batter,leadoff]
+      a[5] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[6] <- V[ondeck,d,outs,bases$first.second,batter,leadoff]
+      a[7] <- V[ondeck,d,outs,bases$first.third,batter,leadoff]
+      a[8] <- V[ondeck,d,outs,bases$second.third,nobody,leadoff]
+      a[9] <- V[ondeck,min(dtop,d+1),outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,min(dtop,d+1),outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+2),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      bunt <- sacbunt(batter)*V[ondeck,d,outs1,bases$second.only,nobody,leadoff] + 
+        (1-sacbunt(batter))*V[ondeck,d,outs1,bases$first.only,batter,leadoff]
+      hitaway <- probs[batter,] %*% a
+      steal <- psteal(onfirst)*V[batter,d,outs,bases$second.only,nobody,leadoff] +
+        (1-psteal(onfirst))*V[batter,d,outs1,bases$empty,nobody,leadoff]
+      V[batter,d,outs,bases$first.only,onfirst,leadoff] <- min(max([hitaway,steal,bunt]),walk)
+      if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==walk) {
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 4
+      } else if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==steal) {
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 2 
+      } else if (V[batter,d,outs,bases$first.only,onfirst,leadoff]==bunt) {
+        strategy[batter,d,outs,bases$first.only,onfirst,leadoff] <- 3   
+      }
+}}}
 
-end
-end
-end
-
-##                                       0 out, bases empty
+## 0 out, bases empty
 for (batter in seq(1,9)) {
   if (batter == 9) {
     ondeck <- 1
@@ -759,28 +735,23 @@ for (batter in seq(1,9)) {
   }
   for (onfirst in seq(1,9)) {
     for (leadoff in seq(1,9)) {
-
       num.outs <- outs[1]
-      a[1 ]=V[ondeck,d            ,outs1,bases$empty ,nobody ,leadoff)      ##strike out or short fly out
-a[2 ]=a[1)                                                   ##long fly out
-a[3 ]=a[1)                                                   ##hard ground out
-a[4 ]=a[1)                                                   ##soft ground out
-a[5 ]=V[ondeck,d            ,outs,bases$first.only  ,batter,leadoff)       ##walk
-a[6 ]=V[ondeck,d            ,outs,bases$first.only  ,batter,leadoff)       ##short single
-a[7 ]=V[ondeck,d            ,outs,bases$first.only  ,batter,leadoff)       ##long single
-a[8 ]=V[ondeck,d            ,outs,bases$second.only  ,nobody,leadoff)       ##short double
-a[9 ]=V[ondeck,d            ,outs,bases$second.only  ,nobody,leadoff)       ##long double
-a[10]=V[ondeck,d            ,outs,bases$third.only  ,nobody,leadoff)       ##triple
-a[11]=V[ondeck,min(dtop,d+1),outs,bases$empty  ,nobody,leadoff)       ##home run
-walk=a[5)
-hitaway <- probs[batter,] %*% a
-V[batter,d,outs,bases$empty,onfirst,leadoff]=min(hitaway,walk)
-if V[batter,d,outs,bases$empty,onfirst,leadoff]==walk
-strategy(batter,d,outs,bases$empty,onfirst,leadoff]=4
-end
+      a[1] <- V[ondeck,d,outs1,bases$empty,nobody,leadoff]
+      a[2] <- a[1]
+      a[3] <- a[1]
+      a[4] <- a[1]
+      a[5] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[6] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[7] <- V[ondeck,d,outs,bases$first.only,batter,leadoff]
+      a[8] <- V[ondeck,d,outs,bases$second.only,nobody,leadoff]
+      a[9] <- V[ondeck,d,outs,bases$second.only,nobody,leadoff]
+      a[10] <- V[ondeck,d,outs,bases$third.only,nobody,leadoff]
+      a[11] <- V[ondeck,min(dtop,d+1),outs,bases$empty,nobody,leadoff]
+      walk <- a[5]
+      hitaway <- probs[batter,] %*% a
+      V[batter,d,outs,bases$empty,onfirst,leadoff] <- min(hitaway,walk)
+      if (V[batter,d,outs,bases$empty,onfirst,leadoff]==walk)
+        strategy[batter,d,outs,bases$empty,onfirst,leadoff] <- 4
+}}}
 
-end
-end
-end
-
-end
+}
