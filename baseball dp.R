@@ -55,11 +55,11 @@ for (count in seq(1,numextrainnings)) {
     for (j in seq(1,9)) {
       for (d in seq(1,dtop)) {
         if (d <= maxlead) {
-          W(d,i,j)=0
+          W[d,i,j]=0
         } else if (d==maxlead+1) {
-          W(d,i,j)=1-V(i,d,outs0,b0,nobody,j)
+          W[d,i,j]=1-V[i,d,outs[1],bases$empty,nobody,j]
         } else {
-          W(d,i,j)=1
+          W[d,i,j]=1
         }
       }}}
   
@@ -72,7 +72,7 @@ for (count in seq(1,numextrainnings)) {
   for (i in seq(1,9)) {
     for (j in seq(1,9)) {
       for (d in seq(1,dtop)) {
-        W(d,i,j)=1-V(i,dtop-d+1,outs0,b0,nobody,j)
+        W[d,i,j]=1-V[i,dtop-d+1,outs[1],bases$empty,nobody,j]
       }}}
   
   psteal <- pstealaway
@@ -89,11 +89,11 @@ for (inning in seq(10,1)) {
     for (j in seq(1,9)) {
       for (d in seq(1,dtop)) {
         if (d <= maxlead) {
-          W(d,i,j)=0
+          W[d,i,j]=0
         } else if (d==maxlead+1) {
-          W(d,i,j)=1-V(i,d,outs0,b0,nobody,j)
+          W[d,i,j]=1-V[i,d,outs[1],bases$empty,nobody,j]
         } else {
-          W(d,i,j)=1
+          W[d,i,j]=1
         }
       }
     }
@@ -109,7 +109,7 @@ for (inning in seq(10,1)) {
   for (i in seq(1,9)) {
     for (j in seq(1,9)) {
       for (d in seq(1,dtop)) {
-        W(d,i,j)=1-V(i,dtop-d+1,outs0,b0,nobody,j)
+        W[d,i,j]=1-V[i,dtop-d+1,outs[1],bases$empty,nobody,j]
       }}}
   
   psteal=pstealaway
