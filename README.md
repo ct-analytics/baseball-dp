@@ -6,3 +6,5 @@ Original code was in MATLAB and I have since translated it to R for additional f
 ## Quick start guide
 1. Download the .R programs to a single directory. 
 2. Open up the "baseball dp.R" program and execute.
+
+Link to original code: http://www.footballcommentary.com/bbmodel.htm
